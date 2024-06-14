@@ -15,7 +15,7 @@ def login():
 
     if request.method == 'POST':
         data = request.form
-        username = data["username"]
+        username = data["userName"]
         password = data["password"]
 
         return login.login(username, password)
