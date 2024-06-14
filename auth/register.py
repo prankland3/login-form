@@ -6,10 +6,10 @@ import hashlib
 def register(username, password, password_repeat, email, firstName, lastName):
     if password == "" or password_repeat == "" or email == "" or firstName == "" or lastName == "":
         empty_err = "Some of the criteria isn't filled in please check them."
-        return print(empty_err)
+        return render_template("register.html"), print(empty_err)
     elif password != password_repeat:
         repeat_err = "Password didn't match. Please try again."
-        return print(repeat_err)
+        return render_template("register.html"), print(repeat_err)
     elif len(password) < 8:
         password_len_err = "Password must be at least 8 characters long."
         return render_template("register.html"), password_len_err
