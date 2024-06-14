@@ -37,6 +37,8 @@ def register():
     else:
         return render_template("register.html")
 
+    print(register())
+
 
 
 if __name__ == '__main__':

@@ -9,27 +9,27 @@ def register(username, password, password_repeat, email, firstName, lastName):
     numbers =" 1234567890"
     if password == "" or password_repeat == "" or email == "" or firstName == "" or lastName == "":
         empty_err = "Some of the criteria isn't filled in please check them."
-        return empty_err
+        return print(empty_err)
     elif password != password_repeat :
         repeat_err = "Password didn't match. Please try again."
-        return repeat_err
+        return ptint(repeat_err)
     elif len(password) < 8:
         password_len_err = "Password must be 8 characters long."
         return render_template("register.html"), password_len_err
     elif lower_case_letters not in password:
         password_lower_err = "Password must contain lower case letters."
-        return render_template("register.html"), password_lower_err
+        return render_template("register.html"), print(password_lower_err)
     elif upper_case_letters not in password:
         password_upper_err = "Password must contain upper case letters."
-        return render_template("register.html"), password_upper_err
+        return render_template("register.html"), print(password_upper_err)
     elif numbers not in password:
         password_number_err = "Password must contain numbers."
-        return render_template("register.html"), password_number_err
+        return render_template("register.html"), print(password_number_err)
     else:
         password = hashlib.md5(password.encode()).hexdigest()
         insert_user(username, password, email, firstName, lastName)
         success_sign_up = "sign up is successful.<br> you can now try to login"
-        return render_template("login.html"), success_sign_up
+        return render_template("login.html"), print(success_sign_up)
 
 
 
