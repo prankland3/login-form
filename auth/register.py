@@ -15,21 +15,21 @@ def register(username, password, password_repeat, email, firstName, lastName):
         return repeat_err
     elif len(password) < 8:
         password_len_err = "Password must be 8 characters long."
-        return password_len_err
+        return render_template("register.html"), password_len_err
     elif lower_case_letters not in password:
         password_lower_err = "Password must contain lower case letters."
-        return password_lower_err
+        return render_template("register.html"), password_lower_err
     elif upper_case_letters not in password:
         password_upper_err = "Password must contain upper case letters."
-        return password_upper_err
+        return render_template("register.html"), password_upper_err
     elif numbers not in password:
         password_number_err = "Password must contain numbers."
-        return password_number_err
+        return render_template("register.html"), password_number_err
     else:
         password = hashlib.md5(password.encode()).hexdigest()
         insert_user(username, password, email, firstName, lastName)
-        success_sign_up = "sign up is successful."
-        return success_sign_up
+        success_sign_up = "sign up is successful.<br> you can now try to login"
+        return render_template("login.html"), success_sign_up
 
 
 
