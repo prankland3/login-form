@@ -1,14 +1,14 @@
 from flask import Flask, render_template, url_for, redirect, request, session
 
-from auth import register
+from auth import register as reg
 from auth import login
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 
 @app.route('/')
 def home():  # put application's code here
-    return render_template('index.html', )
+    return render_template('index.html', title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -27,13 +27,13 @@ def register():
 
     if request.method == 'POST':
         data = request.form
-        username = data["username"]
-        password = data["password"]
-        password_repeat = data["passwordRepeat"]
+        username = data["userName"]
+        password = data["pwd"]
+        password_repeat = data["pwdRepeat"]
         email = data["email"]
-        firstName = data["firstName"]
-        lastName = data["lastName"]
-        return register.register(username, password, password_repeat, email, firstName, lastName)
+        firstName = data["FirstName"]
+        lastName = data["SecondName"]
+        return reg.register(username, password, password_repeat, email, firstName, lastName)
     else:
         return render_template("register.html")
 
