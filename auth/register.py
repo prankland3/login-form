@@ -4,8 +4,8 @@ import sqlite3
 import hashlib
 
 def register(username, password, password_repeat, email, firstName, lastName):
-    lower_case_letters = string.ascii_lowercase
-    upper_case_letters =  string.ascii_uppercase
+    lower_case_letters = "azertyuiopqsdfghjklmwxcvbn"
+    upper_case_letters =  "AZERTYUIOPQSDFGHJKLMWXCVBN"
     numbers =" 1234567890"
     if password == "" or password_repeat == "" or email == "" or firstName == "" or lastName == "":
         empty_err = "Some of the criteria isn't filled in please check them."
