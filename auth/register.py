@@ -5,6 +5,7 @@ import hashlib
 
 
 def register(username, password, password_repeat, email, firstName, lastName):
+ 
     if password == "" or password_repeat == "" or email == "" or firstName == "" or lastName == "":
         empty_err = "Some of the criteria isn't filled in please check them."
         return render_template("register.html", err = empty_err)
