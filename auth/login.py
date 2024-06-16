@@ -6,10 +6,11 @@ def login(username, password):
        empty_err = "you must fill all fields"
        return render_template("login.html", err = empty_err)
    else:
+       password = hashlib.md5(password.encode()).hexdigest()
        try:
            with DatabaseConnection() as cur:
                cur.execute("""
-               SELECT * FROM users WHERE username = %s or email = %s AND password = %s
+               SELECT * FROM users WHERE (username = %s or email = %s) AND password = %s
                """, (username, username, password))
                user = cur.fetchone()
            if user:
