@@ -1,7 +1,7 @@
 
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
+from flask import render_template
 import hashlib
+from db.db import DatabaseConnection
 
 
 def register(username, password, password_repeat, email, firstName, lastName):
@@ -35,24 +35,20 @@ def register(username, password, password_repeat, email, firstName, lastName):
     if len(error_messages) == 0:
         password = hashlib.md5(password.encode()).hexdigest()
         insert_user(username, password, email, firstName, lastName)
-        success_sign_up = "sign up is successful.<br> you can now try to login"
+        success_sign_up = "sign up is successful.\n you can now try to login"
         return render_template("login.html", err = success_sign_up)
     else:
         return render_template("register.html", err = error_messages)
 
 
-def insert_user(username, password, email, firstName, lastName):
-    with sqlite3.connect("../database.db") as conn:
-        cur = conn.cursor()
-        cur.execute("""
-        INSERT INTO users (
-        firstname, 
-        lastname, 
-        email, 
-        password, 
-        username) 
-        VALUES 
-        (?, ?, ?, ?, ?)
-        """, (firstName, lastName, email, password, username))
-        conn.commit()
-        cur.close()
+def insert_user( username, password, email, firstName, lastName):
+    try:
+        with DatabaseConnection() as cur:
+            cur.execute("""
+                INSERT INTO users (firstname, lastname, email, password, username) 
+                VALUES (%s, %s, %s, %s, %s)
+                """, (firstName, lastName, email, password, username))
+        return True
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False

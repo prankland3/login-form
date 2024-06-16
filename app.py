@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request, session
 
 from auth import register as reg
 from auth import login
+from db import db
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -33,6 +34,7 @@ def register():
         email = data["email"]
         firstName = data["FirstName"]
         lastName = data["SecondName"]
+        conn = db.get_db_connection()
         return reg.register(username, password, password_repeat, email, firstName, lastName)
     else:
         return render_template("register.html")
